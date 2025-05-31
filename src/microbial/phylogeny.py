@@ -37,24 +37,24 @@ class Phylogeny:
         Returns:
             None.
         """
-        self._kingdom = kingdom
-        self._phylum = phylum
-        self._rclass = rclass
-        self._subclass = None
-        self._order = order
-        self._suborder = None
-        self._family = family
-        self._subfamily = None
-        self._genus = genus
-        self._species = species
-        self._subspecies = None
+        self._kingdom: Optional[str] = kingdom
+        self._phylum: Optional[str] = phylum
+        self._rclass: Optional[str] = rclass
+        self._subclass: Optional[str] = None
+        self._order: Optional[str] = order
+        self._suborder: Optional[str] = None
+        self._family: Optional[str] = family
+        self._subfamily: Optional[str] = None
+        self._genus: Optional[str] = genus
+        self._species: Optional[str] = species
+        self._subspecies: Optional[str] = None
 
     
     # ─── properties ──────────────────────────────────────────────────────────
     # Kingdom
     @property
     def kingdom(self) -> str:
-        return self._kingdom
+        return str(self._kingdom)
     
     @kingdom.setter
     def kingdom(self, value) -> None:
@@ -67,7 +67,7 @@ class Phylogeny:
     # Phylum
     @property
     def phylum(self) -> str:
-        return self._phylum
+        return str(self._phylum)
     
     @phylum.setter
     def phylum(self, value) -> None:
@@ -80,7 +80,7 @@ class Phylogeny:
     # Class
     @property
     def rclass(self) -> str:
-        return self._rclass
+        return str(self._rclass)
     
     @rclass.setter
     def rclass(self, value) -> None:
@@ -93,7 +93,7 @@ class Phylogeny:
     # Subclass
     @property
     def subclass(self) -> str:
-        return self._subclass
+        return str(self._subclass)
     
     @subclass.setter
     def subclass(self, value) -> None:
@@ -102,7 +102,7 @@ class Phylogeny:
     # Order
     @property
     def order(self) -> str:
-        return self._order
+        return str(self._order)
     
     @order.setter
     def order(self, value) -> None:
@@ -115,7 +115,7 @@ class Phylogeny:
     # Suborder
     @property
     def suborder(self) -> str:
-        return self._suborder
+        return str(self._suborder)
     
     @suborder.setter
     def suborder(self, value) -> None:
@@ -128,7 +128,7 @@ class Phylogeny:
     # Family
     @property
     def family(self) -> str:
-        return self._family
+        return str(self._family)
     
     @family.setter
     def family(self, value) -> None:
@@ -141,7 +141,7 @@ class Phylogeny:
     # Subfamily
     @property
     def subfamily(self) -> str:
-        return self._subfamily
+        return str(self._subfamily)
     
     @subfamily.setter
     def subfamily(self, value) -> None:
@@ -154,7 +154,7 @@ class Phylogeny:
     # Genus
     @property
     def genus(self) -> str:
-        return self._genus
+        return str(self._genus)
     
     @genus.setter
     def genus(self, value) -> None:
@@ -167,7 +167,7 @@ class Phylogeny:
     # Species
     @property
     def species(self) -> str:
-        return self._species
+        return str(self._species)
     
     @species.setter
     def species(self, value) -> None:
