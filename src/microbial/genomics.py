@@ -8,8 +8,6 @@ from abc import ABC
 from enum import Enum
 from typing import Optional, Protocol, Union
 
-from Bio.Seq import Seq
-
 class Domain(Enum):
     BACTERIA = "bacteria"
     FUNGI = "fungi"
@@ -17,7 +15,7 @@ class Domain(Enum):
 
 class Genomic(Protocol):
     domain: Domain
-    _sequence: Optional[Seq]
+    _sequence: Optional
 
     @property
     def sequence(self) -> str: ...
@@ -49,7 +47,7 @@ class Genome(ABC):
 
     def __init__(
         self,
-        sequence: Optional[Union[Seq, str]] = None,
+        sequence: Optional[Union[str, str]] = None,
         is_damaged: bool = False,
         is_linear: bool = False,
         is_mutated: bool = False,
