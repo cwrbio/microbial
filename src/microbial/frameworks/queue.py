@@ -5,6 +5,8 @@ standard libary's `heapq` module, for managing event queues in
 the `microbial` event-handling framework.
 """
 # ─── import statements ────────────────────────────────────────────────── ✦✦ ──
+
+# standard library imports
 from __future__ import annotations
 from abc import ABC
 from collections.abc import Iterable
@@ -17,6 +19,10 @@ from itertools import count
 from time import sleep
 from typing import Optional
 from uuid import uuid4, UUID
+
+# local imports
+from .events import Event, ReplicationEvent, MutationEvent
+
 
 # ─── constants ────────────────────────────────────────────────────────── ✦✦ ──
 
@@ -227,66 +233,4 @@ The queue's counter should not be deleted.
                 del self._entry_map[event]
                 return event
         raise KeyError("Attempted to pop from empty event queue.")
-        
 
-class Event(ABC):
-    """Base class for all events in the simulation framework."""
-    def __init__(self):
-        self._id: UUID = uuid4()
-        self._is_valid: bool = True
-        self._timestamp: dt = dt.now()
-
-
-    # : properties
-
-    @property
-    def id(self) -> UUID:
-        return self._id
-
-    @id.setter
-    def id(self, value: UUID) -> None:
-        self._id = (
-            value if isinstance(value, UUID)
-            else TypeError("`.id` must be an instance of `UUID`.")
-        )
-
-    @id.deleter
-    def id(self) -> UserWarning:
-        return("""\
-⚠︎ Warning:
-
-Event IDs should not be deleted. If you need to set the event's `.id`
-attribute to a different unique identifier, set it to a new `UUID`
-instance.
-""")
-
-    @property
-    def is_valid(self) -> bool:
-        return self._is_valid
-
-    @is_valid.setter
-    def is_valid(self, value: bool) -> None:
-        self._is_valid = (
-            value if isinstance(value, bool)
-            else TypeError("`.is_valid` must be a boolean value.")
-        )
-
-    @is_valid.deleter
-    def is_valid(self) -> None:
-        self._is_valid = False
-
-
-class ReplicationEvent(Event):
-    """An event representing a replication action in the simulation."""
-    def __init__(self, entity_id: UUID, seconds_from_now: int | float = 10.0):
-        super().__init__()
-        self._entity_id: UUID = entity_id
-        self._seconds_from_now = seconds_from_now
-
-    @property
-    def entity_id(self) -> UUID:
-        return self._entity_id
-
-    @property
-    def seconds_from_now(self) -> float:
-        return self._seconds_from_now

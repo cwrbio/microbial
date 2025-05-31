@@ -3,11 +3,12 @@
 This module initializes the microbial framework package.
 """
 # ─── import statements ────────────────────────────────────────────────── ✦✦ ──
-from . import environment, executor, queue, scheduler, simulator
+from . import environment, events, executor, queue, scheduler, simulator
 
 from .environment import Environment
+from .events import Event, Eventful, MutationEvent, ReplicationEvent
 from .executor import Executor
-from .queue import Event, Queue
+from .queue import Queue
 from .scheduler import Scheduler
 from .simulator import Simulator
 
@@ -19,8 +20,9 @@ from .simulator import Simulator
 
 __all__= [
     # ─── modules ──────────────────────────────────────────────────────────────
-    "environment", "executor", "queue", "scheduler", "simulator",
+    "environment", "events", "executor", "queue", "scheduler", "simulator",
 
     # ─── classes ──────────────────────────────────────────────────────────────
-    "Environment", "Event", "Executor", "Queue", "Scheduler", "Simulator"
+    "Environment", "Event", "Eventful", "Executor", "MutationEvent", "Queue",
+    "ReplicationEvent", "Scheduler", "Simulator"
 ]

@@ -3,17 +3,22 @@
 Utilities for modeling various bacterial systems.
 """
 # : import statements
+
+# standard library imports
 from __future__ import annotations
 
 import logging
 
 from abc import ABC, abstractmethod
 from typing import List, Optional
+from pathlib import Path
 from random import randint
 from uuid import uuid4, UUID
 
+# third-party imports
 from platformdirs import user_log_dir
 
+# local imports
 from ..genomics import Genome, BacterialGenome
 from ..phylogeny import Phylogeny
 
@@ -38,10 +43,12 @@ class Bacterium(ABC):
 
         if isinstance(genome, Genome):
             self.genome = genome
-        else:
+        elif not isinstance(genome, Genome) and genome is not None:
             print(
                 "Bacterium argument `genome` must be an instance of `Genome`."
             )
+        else:
+            self.genome = None  # Default to None if no genome is provided
     
     # : instance methods
     #
@@ -94,7 +101,7 @@ class Bacterium(ABC):
             """
         ) 
 
-    # : instance methods
+    # : magic methods
 
     def __repr__(self) -> str:
         return f"Bacterium(id={self.id}, phylogeny={self.phylogeny}, genome={self.genome})"
@@ -110,3 +117,6 @@ class Bacterium(ABC):
 
     def __hash__(self) -> int:
         return hash(self.id)
+
+
+    # : instance methods 

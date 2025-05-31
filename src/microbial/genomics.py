@@ -4,9 +4,12 @@ This module defines the package's microbial genome models.
 """
 # ─── import statements ────────────────────────────────────────────────── ✦✦ ──
 
+# standard library imports
 from abc import ABC
 from enum import Enum
+from pathlib import Path
 from typing import Optional, Protocol, Union
+
 
 class Domain(Enum):
     BACTERIA = "bacteria"
@@ -154,6 +157,8 @@ class BacterialGenome(Genome):
         super().__init__(sequence)
         self.host = host
 
+    # : properties
+
     @property
     def sequence(self) -> str:
         return self._sequence
@@ -164,7 +169,65 @@ class BacterialGenome(Genome):
 
     @sequence.deleter
     def sequence(self) -> None:
-        del self._sequence
+        del self._sequence\
+
+    # : class methods
+
+    # : instance methods
+
+    # : static methods
+
+    def from_fasta(filepath: str | Path) -> "BacterialGenome":
+        """Load a bacterial genome from a FASTA file."""
+        try:
+            from Bio import SeqIO
+
+            record = SeqIO.read(filepath, "fasta")
+            return BacterialGenome(record.seq, host=None)
+        except ImportError:
+            raise ImportError(
+                "Biopython is required to load bacterial genomes from FASTA "
+                "files. Please install it using 'pip install biopython'."
+            )
+        except ModuleNotFoundError:
+            raise ModuleNotFoundError(
+                "Biopython is required to load bacterial genomes from FASTA"
+                "files. Please install it using 'pip install biopython'."
+            )
+        except FileNotFoundError:
+            raise FileNotFoundError(
+                f"The file '{filepath}' does not exist or is not accessible."
+            )
+        except Exception as e:
+            raise RuntimeError(
+                f"An error occurred while reading the FASTA file: {e}"
+            )
+
+    def sequence_generator(self, length: int, iterations: int) -> str:
+        """Iterate over the genome sequence in chunks of a given length."""
+        start: int = 0
+
+        while iterations > 0:
+            end: int = start + length
+
+            segment = self.sequence[start:end]
+            yield segment
+            
+            start += length
+            
+            iterations -= 1
+
+    def get_genome(self, chunk_length: int = 72) -> str:
+        """Iterate over the entire genome sequence."""
+        length: int = len(self._sequence)
+        start: int = 0
+
+        while start < length:
+            yield str(self.sequence[start:start + chunk_length]).strip()
+
+            start += chunk_length
+
+
 
 
 class FungalGenome(Genome):
