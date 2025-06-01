@@ -181,8 +181,6 @@ The queue's counter should not be deleted.
 
         deadline = dt.now() + td(seconds=seconds_from_now)
 
-        self.defer_event(seconds_from_now)
-
         try:
             if event in self._entry_map:
                 self.remove_event(event)

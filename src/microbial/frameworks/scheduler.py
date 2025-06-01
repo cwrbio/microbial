@@ -141,6 +141,27 @@ you can do so by assigning a new UUID instance via the `id` setter.
 """
 )
 
+    def step(self, n: int = 1) -> None:
+        """Execute the next scheduled event(s).
+
+        Args:
+          n (int):
+            The number of times to step through the event queue.
+
+        Returns:
+            `None`.
+        """
+        if not self._events:
+            raise ValueError("No events scheduled.")
+        elif n < 1:
+            raise ValueError("Number of steps must be a positive integer.")
+
+        # Get the next event to execute
+        next_event = self.events.pop_event()
+
+        # Execute the event
+        next_event.execute()
+
     # ─── instance methods ─────────────────────────────────────────────────────
     # def __repr__(self) -> str:
     #     return (

@@ -188,7 +188,7 @@ wheels = [
 
 [[package]]
 name = "microbial"
-version = "0.0.0.dev2"
+version = "0.0.0.dev3"
 source = { editable = "." }
 dependencies = [
     { name = "matplotlib" },
